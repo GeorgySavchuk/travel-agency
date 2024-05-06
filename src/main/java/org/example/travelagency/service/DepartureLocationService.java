@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.travelagency.model.DTO.DepartureLocationDTO;
 import org.example.travelagency.model.DepartureLocation;
+import org.example.travelagency.model.Tour;
 import org.example.travelagency.repository.DepartureLocationRepository;
+import org.example.travelagency.repository.TourRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,7 @@ import java.util.Optional;
 @Service
 public class DepartureLocationService {
     private final DepartureLocationRepository departureLocationRepository;
+    private final TourRepository tourRepository;
 
     public boolean addDepartureLocation(DepartureLocationDTO departureLocationDTO) {
         DepartureLocation departureLocation = new DepartureLocation(departureLocationDTO.getCountry(), departureLocationDTO.getCity());
@@ -33,6 +37,8 @@ public class DepartureLocationService {
         Optional<DepartureLocation> departureLocation = departureLocationRepository.findByCity(city);
 
         if (departureLocation.isPresent()) {
+            List<Tour> tours = tourRepository.findAllByDepartureLocation(departureLocation.get());
+            tourRepository.deleteAll(tours);
             departureLocationRepository.delete(departureLocation.get());
             log.info("Departure location deleted {}", city);
             return true;
@@ -43,7 +49,22 @@ public class DepartureLocationService {
     }
 
     public List<DepartureLocation> getAllDepartureLocations() {
-        log.info("Get all departure locations");
+        log.info("Getting all departure locations");
         return departureLocationRepository.findAll();
+    }
+
+    public List<DepartureLocation> getAllDepartureLocationsByCountry(String country) {
+        log.info("Getting all departure locations by country {}", country);
+        return departureLocationRepository.findAllByCountry(country);
+    }
+
+    public List<Tour> getAllToursByDepartureLocation(DepartureLocationDTO departureLocationDTO) {
+        Optional<DepartureLocation> departureLocation = departureLocationRepository.findByCity(departureLocationDTO.getCity());
+        if (departureLocation.isPresent()) {
+            log.info("Getting all tours by departure location {}", departureLocationDTO);
+            return tourRepository.findAllByDepartureLocation(departureLocation.get());
+        }
+        log.info("There is no such departure location {}", departureLocationDTO);
+        return Collections.emptyList();
     }
 }

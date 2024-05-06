@@ -1,13 +1,18 @@
 package org.example.travelagency.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.travelagency.model.Booking;
 import org.example.travelagency.model.User;
 import org.example.travelagency.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
+@Slf4j
 @Service
 public class UserService {
 
@@ -30,4 +35,5 @@ public class UserService {
     public UserDetailsService userDetailsService() {
         return this::getByUsername;
     }
+
 }

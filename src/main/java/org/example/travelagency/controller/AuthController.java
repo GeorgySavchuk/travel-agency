@@ -7,14 +7,16 @@ import org.example.travelagency.model.DTO.UserDTO;
 import org.example.travelagency.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
-@RestController("/auth")
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
     private final AuthService authorizationService;
 
-    @PostMapping("auth/signup")
+    @PostMapping("/signup")
     public String signUp(@RequestBody UserDTO userData){
         if(authorizationService.signUp(userData)){
             return "User created";
@@ -23,7 +25,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("auth/signin")
+    @PostMapping("/signin")
     public String signIn(@RequestBody UserDTO userData, HttpServletRequest request, HttpServletResponse response){
         if(authorizationService.signIn(userData, request, response)){
             return "Signed in successfully";

@@ -1,6 +1,7 @@
 package org.example.travelagency.configuration;
 
 import lombok.AllArgsConstructor;
+import org.example.travelagency.model.User;
 import org.example.travelagency.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -61,7 +62,10 @@ public class Security{
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("/auth/signin", "/auth/signup").anonymous().anyRequest().authenticated())
+                        request
+                                .requestMatchers("/auth/signin", "/auth/signup").anonymous()
+                                .requestMatchers("/admin/**").hasAuthority(User.Role.ADMIN.name())
+                                .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .logout(logout ->

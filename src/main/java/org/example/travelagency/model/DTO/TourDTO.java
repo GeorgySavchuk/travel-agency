@@ -16,8 +16,7 @@ public class TourDTO {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
     private double price;
-    private int nights;
-    private int tourists;
+    private int maxTourists;
     private String hotel;
     private Long destinationLocationId;
     private Long departureLocationId;

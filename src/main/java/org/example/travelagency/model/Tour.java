@@ -33,9 +33,6 @@ public class Tour {
     private double price;
 
     @Column(nullable = false)
-    private int nights;
-
-    @Column(nullable = false)
     private int maxTourists;
 
     @Column(nullable = false)
@@ -53,11 +50,10 @@ public class Tour {
     @OneToMany(mappedBy = "tour")
     private List<Booking> bookings = new ArrayList<>();
 
-    public Tour(Date startDate, Date endDate, double price, int nights, int maxTourists, String hotel, DestinationLocation destinationLocation, DepartureLocation departureLocation) {
+    public Tour(Date startDate, Date endDate, double price, int maxTourists, String hotel, DestinationLocation destinationLocation, DepartureLocation departureLocation) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.price = price;
-        this.nights = nights;
         this.maxTourists = maxTourists;
         this.hotel = hotel;
         this.destinationLocation = destinationLocation;
