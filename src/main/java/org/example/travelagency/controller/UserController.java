@@ -1,43 +1,37 @@
 package org.example.travelagency.controller;
 
-
 import lombok.AllArgsConstructor;
 import org.example.travelagency.model.Booking;
 import org.example.travelagency.model.DTO.BookingDTO;
-import org.example.travelagency.service.BookingService;
+import org.example.travelagency.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/bookings")
-public class BookingController {
-    private final BookingService bookingService;
+@RequestMapping("/user")
+public class UserController {
+    private final UserService userService;
 
-    @PostMapping("/add")
+    @PostMapping("/bookings/add")
     public String addBooking(@RequestBody BookingDTO booking) {
-        if (bookingService.addBooking(booking)) {
+        if (userService.addBooking(booking)) {
             return "Booking added";
         }
         return "Booking not added";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/bookings/delete")
     public String deleteBooking(@RequestBody BookingDTO booking) {
-        if (bookingService.deleteBooking(booking)) {
+        if (userService.deleteBooking(booking)) {
             return "Booking deleted";
         }
         return "Booking not deleted";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/bookings/all")
     public List<Booking> getAllBookings() {
-        return bookingService.getAllBookings();
-    }
-
-    @GetMapping("/{username}")
-    public List<Booking> getBooking(@PathVariable String username) {
-        return bookingService.getAllUserBookings(username);
+        return userService.getUserBookings();
     }
 }

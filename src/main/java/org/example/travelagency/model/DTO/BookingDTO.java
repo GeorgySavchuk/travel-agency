@@ -11,6 +11,5 @@ import lombok.Setter;
 @Setter
 public class BookingDTO {
     private int tourists;
-    private Long userId;
     private Long tourId;
 }

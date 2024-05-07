@@ -1,8 +1,10 @@
 package org.example.travelagency.configuration;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.example.travelagency.model.User;
 import org.example.travelagency.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -69,7 +71,16 @@ public class Security{
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .logout(logout ->
-                        logout.logoutUrl("/auth/logout").logoutSuccessUrl("/").invalidateHttpSession(true));
+                        logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> {
+                            response.setContentType(MediaType.TEXT_PLAIN_VALUE);
+                            if (authentication != null && authentication.isAuthenticated()) {
+                                response.setStatus(HttpServletResponse.SC_OK);
+                                response.getWriter().write("Logged out successfully");
+                            } else {
+                                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                                response.getWriter().write("You are not logged in");
+                            }
+                        }).invalidateHttpSession(true));
 
         return http.build();
     }

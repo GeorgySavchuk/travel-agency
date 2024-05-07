@@ -12,36 +12,21 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/destinations")
 public class DestinationLocationController {
     private final DestinationLocationService destinationLocationService;
 
-    @PostMapping("/admin/destinations/add")
-    public String addDestinationLocation(@RequestBody DestinationLocationDTO destinationLocation) {
-        if (destinationLocationService.addDestinationLocation(destinationLocation)) {
-            return "Destination location added successfully";
-        }
-        return "Destination location not added";
-    }
-
-    @PostMapping("/admin/destinations/delete")
-    public String deleteDestinationLocation(@RequestBody String city) {
-        if (destinationLocationService.deleteDestinationLocation(city)) {
-            return "Destination location deleted successfully";
-        }
-        return "Destination location not deleted";
-    }
-
-    @GetMapping("/destinations/all")
+    @GetMapping("/all")
     public List<DestinationLocation> showAllDestinationLocations() {
         return destinationLocationService.getAllDestinationLocations();
     }
 
-    @GetMapping("/destinations/{country}")
+    @GetMapping("/{country}")
     public List<DestinationLocation> showAllDestinationLocationByCountry(@PathVariable String country) {
         return destinationLocationService.getAllDestinationLocationsByCountry(country);
     }
 
-    @GetMapping("/destinations/tours")
+    @GetMapping("/tours")
     public List<Tour> showAllToursByDestinationLocation(@RequestBody DestinationLocationDTO destinationLocation) {
         return destinationLocationService.getAllToursByDestinationLocation(destinationLocation);
     }
