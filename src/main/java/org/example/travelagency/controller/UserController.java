@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import org.example.travelagency.model.Booking;
 import org.example.travelagency.model.DTO.BookingDTO;
 import org.example.travelagency.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@PreAuthorize("hasAuthority('USER')")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;

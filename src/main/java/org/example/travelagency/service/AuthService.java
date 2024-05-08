@@ -24,7 +24,7 @@ public class AuthService {
 
     public boolean signUp(UserDTO userData) {
 
-        User user = new User(userData.getUsername(), passwordEncoder.encode(userData.getPassword()), userData.getRole().equals("USER") ? User.Role.USER : User.Role.ADMIN);
+        User user = new User(userData.getUsername(), passwordEncoder.encode(userData.getPassword()), User.Role.USER);
 
         return userService.create(user);
     }
