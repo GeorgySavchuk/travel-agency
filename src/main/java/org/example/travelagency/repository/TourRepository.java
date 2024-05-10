@@ -19,4 +19,5 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
     List<Tour> findAllByDestinationLocation_CityAndDepartureLocation_City(String destinationCity, String departureCity);
     List<Tour> findAllByDepartureLocation(DepartureLocation departureLocation);
     List<Tour> findAllByDestinationLocation(DestinationLocation destinationLocation);
+    List<Tour> findAllByStartDateGreaterThanEqualAndDepartureLocation_City(Date startDate, String departureCity);
 }

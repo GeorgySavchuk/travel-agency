@@ -4,8 +4,10 @@ package org.example.travelagency.controller;
 import lombok.AllArgsConstructor;
 import org.example.travelagency.model.Tour;
 import org.example.travelagency.service.TourService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -47,5 +49,9 @@ public class TourController {
     @GetMapping("/all/{departureCity}/destinationCity/{destinationCity}")
     public List<Tour> showAllToursByDepartureCityAndDestinationCity(@PathVariable String departureCity, @PathVariable String destinationCity) {
         return tourService.getAllToursByDepartureCityAndDestinationCity(departureCity, destinationCity);
+    }
+    @GetMapping("/all/{departureCity}/startDate/{startDate}")
+    public List<Tour> showAllToursByDepartureCityAndStartDate(@PathVariable String departureCity, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate) {
+        return tourService.getAllToursByDepartureCityAndStartDate(departureCity, startDate);
     }
 }

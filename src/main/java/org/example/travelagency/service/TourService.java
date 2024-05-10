@@ -13,6 +13,7 @@ import org.example.travelagency.repository.DestinationLocationRepository;
 import org.example.travelagency.repository.TourRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,5 +108,9 @@ public class TourService {
     public List<Tour> getAllToursByDepartureCityAndDestinationCity(String departureCity, String destinationCity) {
         log.info("Getting all tours by destination city {}", destinationCity);
         return tourRepository.findAllByDestinationLocation_CityAndDepartureLocation_City(destinationCity, departureCity);
+    }
+    public List<Tour> getAllToursByDepartureCityAndStartDate(String departureCity, Date startDate) {
+        log.info("Getting all tours by startDate {}", startDate);
+        return tourRepository.findAllByStartDateGreaterThanEqualAndDepartureLocation_City(startDate, departureCity);
     }
 }
